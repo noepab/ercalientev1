@@ -1,0 +1,8 @@
+{
+  "name": "Bocateria Er'caliente",
+  "description": "Una aplicación web para pedir comida en una bocatería a través de una interfaz interactiva.",
+  "requestFramePermissions": [
+    "microphone",
+    "geolocation"
+  ]
+}

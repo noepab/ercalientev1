@@ -1,0 +1,154 @@
+# Guía de Integración: Generación de Modelos 3D (Texto a 3D con Shap-E)
+
+Este documento describe el flujo de trabajo técnico para conectar la aplicación frontend con un backend (que ejecutará un notebook de Google Colab) para automatizar la conversión de un prompt de texto a un modelo 3D.
+
+## Flujo de Trabajo General
+
+1.  **Envío de Prompt (Frontend):** El usuario escribe una descripción del modelo 3D en la interfaz de la aplicación (`ModelGenerationModal`) y pulsa "Generar".
+2.  **Llamada a la API (Frontend):** El frontend envía este prompt de texto a un endpoint de tu servidor/backend.
+3.  **Ejecución de Colab (Backend):** El backend ejecuta el notebook de Google Colab (`Generar_modelos_3D_con_AI.ipynb`), pasándole el prompt del usuario como un parámetro.
+4.  **Procesamiento en Colab:**
+    *   El notebook recibe el prompt.
+    *   Ejecuta el modelo `shap-e` para generar el modelo 3D.
+    *   Guarda el resultado inicial como `.obj`.
+    *   **Paso Crítico:** Convierte el archivo `.obj` a `.glb`, que es el formato optimizado para la web y la Realidad Aumentada.
+5.  **Subida del Modelo 3D:** El notebook sube el archivo `.glb` resultante a un almacenamiento en la nube accesible públicamente (como Google Cloud Storage, AWS S3, etc.).
+6.  **Devolución de URL (Backend):** Una vez que el modelo 3D está almacenado, el backend recibe la URL pública del nuevo archivo `.glb`.
+7.  **Respuesta al Frontend:** El backend responde a la solicitud original del frontend con la URL del modelo 3D.
+8.  **Visualización (Frontend):** El frontend recibe la URL y la utiliza para mostrar el modelo en el componente `<model-viewer>`, permitiendo la visualización y el uso en Realidad Aumentada.
+
+---
+
+## Plantilla de Script para Google Colab (Automatización)
+
+Este es el código de tu notebook, adaptado para ser ejecutado por un script o API.
+
+```python
+# ===================================================================
+# Generar_modelos_3D_con_AI.ipynb (Versión para Automatización)
+# ===================================================================
+
+# --- PASO 1: INSTALACIÓN Y CONFIGURACIÓN ---
+# (Esto se ejecutaría solo una vez o al inicio de la instancia de Colab)
+!git clone https://github.com/openai/shap-e.git
+%cd shap-e
+!pip install -e .
+!pip install trimesh # Librería para la conversión de formatos de malla 3D
+
+# --- PASO 2: CARGA DE MODELOS ---
+import torch
+from shap_e.diffusion.sample import sample_latents
+from shap_e.diffusion.gaussian_diffusion import diffusion_from_config
+from shap_e.models.download import load_model, load_config
+from shap_e.util.notebooks import decode_latent_mesh
+import trimesh # Importar trimesh
+import argparse # Para aceptar parámetros externos
+
+# Configurar dispositivo
+device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+
+# Cargar modelos de IA
+print("Cargando modelos de IA...")
+xm = load_model('transmitter', device=device)
+model = load_model('text300M', device=device)
+diffusion = diffusion_from_config(load_config('diffusion'))
+print("Modelos cargados.")
+
+# --- PASO 3: OBTENER PROMPT Y GENERAR MODELO ---
+
+# En un entorno real, el prompt se pasaría como argumento desde el backend
+# Ejemplo de cómo se recibiría:
+# parser = argparse.ArgumentParser()
+# parser.add_argument('-p', '--prompt', type=str, required=True, help='Prompt de texto para generar el modelo 3D')
+# args = parser.parse_args()
+# user_prompt = args.prompt
+
+# Para este ejemplo, usamos un valor por defecto:
+user_prompt = "un delicioso bocadillo de calamares con pan crujiente"
+
+print(f"Generando modelo para el prompt: '{user_prompt}'")
+
+# Configuración de la generación
+batch_size = 1 # Generamos un modelo a la vez para la automatización
+guidance_scale = 15.0
+
+# Generar latentes
+latents = sample_latents(
+    batch_size=batch_size,
+    model=model,
+    diffusion=diffusion,
+    guidance_scale=guidance_scale,
+    model_kwargs=dict(texts=[user_prompt] * batch_size),
+    progress=True,
+    clip_denoised=True,
+    use_fp16=True,
+    use_karras=True,
+    karras_steps=64,
+    sigma_min=1e-3,
+    sigma_max=160,
+    s_churn=0,
+)
+
+print("Latentes generados. Decodificando a malla 3D...")
+
+# --- PASO 4: DECODIFICAR, CONVERTIR A .GLB Y GUARDAR ---
+output_name = 'generated_model'
+
+# Decodificar el latente a una malla .obj
+for i, latent in enumerate(latents):
+    t = decode_latent_mesh(xm, latent).tri_mesh()
+    obj_filename = f'{output_name}_{i}.obj'
+    with open(obj_filename, 'w') as f:
+        t.write_obj(f)
+    print(f"Modelo guardado como {obj_filename}")
+
+    # Convertir de .obj a .glb usando trimesh
+    print(f"Convirtiendo {obj_filename} a .glb...")
+    mesh = trimesh.load_mesh(obj_filename)
+    glb_filename = f'{output_name}_{i}.glb'
+    mesh.export(glb_filename)
+    print(f"Modelo convertido y guardado como {glb_filename}")
+
+
+# --- PASO 5: SUBIR EL ARCHIVO .GLB A TU ALMACENAMIENTO EN LA NUBE ---
+# Aquí iría el código para subir el archivo `glb_filename` a tu servicio (GCS, S3, etc.)
+# Ejemplo usando el SDK de Google Cloud Storage
+# from google.cloud import storage
+#
+# def upload_to_gcs(bucket_name, source_file_name, destination_blob_name):
+#     """Sube un archivo a un bucket de Google Cloud Storage."""
+#     # ... (código de autenticación y subida)
+#     storage_client = storage.Client()
+#     bucket = storage_client.bucket(bucket_name)
+#     blob = bucket.blob(destination_blob_name)
+#     blob.upload_from_filename(source_file_name)
+#     print(f"URL pública: {blob.public_url}")
+#     return blob.public_url
+#
+# bucket = "tu-bucket-de-modelos-3d"
+# final_model_url = upload_to_gcs(bucket, glb_filename, f"models/{glb_filename}")
+
+# La URL final `final_model_url` es lo que tu backend debe devolver al frontend.
+# El notebook debería imprimir esta URL al final para que el backend pueda capturarla.
+print(f"URL_DEL_MODELO_EN_LA_NUBE/{glb_filename}")
+
+```
+---
+
+## Integración en el Frontend (React)
+
+Una vez que el backend devuelve la URL del modelo `.glb`, se usa en el componente `model-viewer`. Esto ya está implementado correctamente.
+
+```jsx
+// En ModelGenerationModal.tsx
+
+<model-viewer
+  src="URL_DEL_MODELO_DEVUELTA_POR_EL_BACKEND.glb"
+  ar
+  ar-modes="scene-viewer webxr quick-look"
+  camera-controls
+  auto-rotate
+  style={{ width: "100%", height: "100%" }}
+>
+</model-viewer>
+```

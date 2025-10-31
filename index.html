@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Bocateria Er'caliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      :root {
+        --color-bg: #262220;
+        --color-surface: #3D3531;
+        --color-surface-light: #524742;
+        --color-primary: #F59E0B; /* amber-500 */
+        --color-primary-dark: #D97706; /* amber-600 */
+        --color-text-light: #F3EFEA;
+        --color-text-dark: #3D3531;
+        --color-text-muted: #9CA3AF;
+        --font-heading: 'Playfair Display', serif;
+        --font-body: 'Lato', sans-serif;
+      }
+      body {
+        background-color: var(--color-bg);
+        color: var(--color-text-light);
+        font-family: var(--font-body);
+      }
+      .font-heading {
+        font-family: var(--font-heading);
+      }
+      @keyframes pulse-dot {
+        0%, 100% {
+          opacity: 0.2;
+          transform: scale(0.8);
+        }
+        50% {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+      .animate-pulse-dot-1 {
+        animation: pulse-dot 1.4s infinite ease-in-out;
+        animation-delay: 0s;
+      }
+      .animate-pulse-dot-2 {
+        animation: pulse-dot 1.4s infinite ease-in-out;
+        animation-delay: 0.2s;
+      }
+      .animate-pulse-dot-3 {
+        animation: pulse-dot 1.4s infinite ease-in-out;
+        animation-delay: 0.4s;
+      }
+      @keyframes heartbeat {
+        0%, 100% {
+          transform: scale(1);
+        }
+        50% {
+          transform: scale(1.02);
+        }
+      }
+      .animate-heartbeat {
+        animation: heartbeat 0.5s ease-in-out;
+      }
+      model-viewer::part(progress-bar) {
+        height: 5px;
+        background-color: var(--color-primary);
+        transition: opacity 0.3s;
+      }
+      model-viewer:not([loaded])::part(progress-bar) {
+        opacity: 1;
+      }
+      model-viewer[loaded]::part(progress-bar) {
+        opacity: 0;
+      }
+    </style>
+    <script type="importmap">
+      {
+        "imports": {
+          "react": "https://aistudiocdn.com/react@^19.2.0",
+          "react/": "https://aistudiocdn.com/react@^19.2.0/",
+          "react-dom": "https://aistudiocdn.com/react-dom@^19.2.0",
+          "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
+          "react-qr-code": "https://esm.sh/react-qr-code@2.0.12?external=react",
+          "@google/genai": "https://unpkg.com/@google/genai?module",
+          "framer-motion": "https://esm.sh/framer-motion@11?external=react,react-dom"
+        }
+      }
+    </script>
+    <!-- 3D Model Viewer -->
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.5.0/model-viewer.min.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/index.tsx"></script>
+  </body>
+</html>

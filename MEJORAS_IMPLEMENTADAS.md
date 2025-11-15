@@ -15,6 +15,7 @@ Todas las mejoras han sido implementadas y verificadas exitosamente.
 **Ubicación**: `/CONTRIBUTING.md`
 
 **Contenido**:
+
 - Proceso de setup paso a paso
 - Flujo de desarrollo completo
 - Convenciones de commits (conventional commits)
@@ -32,6 +33,7 @@ Todas las mejoras han sido implementadas y verificadas exitosamente.
 **Ubicación**: `/DEVELOPMENT.md`
 
 **Contenido**:
+
 - Arquitectura completa del proyecto
 - Stack tecnológico explicado
 - Estructura de directorios
@@ -51,6 +53,7 @@ Todas las mejoras han sido implementadas y verificadas exitosamente.
 **Ubicación**: `/CHANGELOG.md`
 
 **Contenido**:
+
 - Formato Keep a Changelog
 - Versionado semántico
 - Registro de todas las mejoras implementadas
@@ -65,6 +68,7 @@ Todas las mejoras han sido implementadas y verificadas exitosamente.
 **Ubicación**: `/package.json`
 
 **Scripts añadidos**:
+
 ```json
 {
   "lint": "eslint . --ext ts,tsx",
@@ -85,6 +89,7 @@ Todas las mejoras han sido implementadas y verificadas exitosamente.
 **Ubicación**: `/scripts/setup.js`
 
 **Funcionalidad**:
+
 - Verifica versión de Node.js (18+)
 - Instala dependencias automáticamente
 - Configura variables de entorno de forma guiada
@@ -92,6 +97,7 @@ Todas las mejoras han sido implementadas y verificadas exitosamente.
 - Muestra próximos pasos claros
 
 **Uso**:
+
 ```bash
 npm run setup
 ```
@@ -105,6 +111,7 @@ npm run setup
 **Ubicación**: `/eslint.config.js`
 
 **Características**:
+
 - ESLint v9 con flat config
 - Reglas para React y TypeScript
 - Reglas para React Hooks
@@ -120,6 +127,7 @@ npm run setup
 **Ubicación**: `/.prettierrc`, `/.prettierignore`
 
 **Configuración**:
+
 - Semi-colons habilitados
 - Single quotes para strings
 - Trailing commas en ES5
@@ -133,6 +141,7 @@ npm run setup
 ### 8. Configuración de VSCode ✅
 
 **Ubicaciones**:
+
 - `/.vscode/settings.json`
 - `/.vscode/launch.json`
 - `/.vscode/extensions.json`
@@ -140,16 +149,19 @@ npm run setup
 **Características**:
 
 **Settings**:
+
 - Format on save habilitado
 - ESLint integrado
 - Auto-organize imports
 - TypeScript workspace version
 
 **Launch Configuration**:
+
 - Debug en Chrome con source maps
 - Debug del Vite dev server
 
 **Extensions Recomendadas**:
+
 - ESLint
 - Prettier
 - TypeScript
@@ -168,6 +180,7 @@ npm run setup
 **Contenido**:
 
 **index.ts**:
+
 - `LocalStorageMock`: Mock de localStorage
 - `mockMenuItem`, `mockDrinkItem`, `mockCartItem`: Datos de ejemplo
 - `createMockAppState()`: Creator de estados mock
@@ -175,6 +188,7 @@ npm run setup
 - `waitForPromises()`, `delay()`: Utilities asíncronas
 
 **README.md**:
+
 - Documentación completa de uso
 - Ejemplos de código
 - API reference
@@ -191,12 +205,14 @@ npm run setup
 **Hooks implementados**:
 
 **pre-commit**:
+
 - Ejecuta `npm run lint:fix` (auto-corrige problemas)
 - Ejecuta `npm run format` (formatea código)
 - Ejecuta `npm run type-check` (no bloqueante)
 - Mensajes informativos
 
 **commit-msg**:
+
 - Valida formato de commits (conventional commits)
 - Tipos válidos: feat, fix, docs, style, refactor, perf, test, chore
 - Mensajes de error claros con ejemplos
@@ -208,12 +224,14 @@ npm run setup
 ## 🎯 Beneficios Globales
 
 ### Para Nuevos Desarrolladores
+
 - ✅ Setup en minutos con script interactivo
 - ✅ Documentación completa y fácil de seguir
 - ✅ VSCode configurado automáticamente
 - ✅ Git hooks que guían el proceso
 
 ### Para Desarrollo Diario
+
 - ✅ Código formateado automáticamente
 - ✅ Errores detectados antes de commit
 - ✅ Debugging sencillo con VSCode
@@ -221,6 +239,7 @@ npm run setup
 - ✅ Testing utilities disponibles
 
 ### Para Mantenimiento
+
 - ✅ Código consistente en todo el proyecto
 - ✅ Historial de cambios documentado
 - ✅ Convenciones claras y validadas
@@ -233,6 +252,7 @@ npm run setup
 ### Setup Inicial
 
 **Opción 1 - Automático (Recomendado)**:
+
 ```bash
 git clone <repo>
 cd ercalientev1
@@ -240,6 +260,7 @@ npm run setup
 ```
 
 **Opción 2 - Manual**:
+
 ```bash
 git clone <repo>
 cd ercalientev1
@@ -292,6 +313,7 @@ git push origin feat/mi-feature
 ## 📂 Archivos Añadidos/Modificados
 
 ### Nuevos Archivos
+
 ```
 CONTRIBUTING.md
 DEVELOPMENT.md
@@ -313,6 +335,7 @@ src/test-utils/README.md
 ```
 
 ### Archivos Modificados
+
 ```
 README.md (mejorado significativamente)
 package.json (scripts y dependencies añadidas)
@@ -374,5 +397,5 @@ Las 10 mejoras implementadas transforman el proyecto en una experiencia de desar
 
 ---
 
-*Documento creado: 2025-11-15*
-*Estado: Completo y verificado*
+_Documento creado: 2025-11-15_
+_Estado: Completo y verificado_

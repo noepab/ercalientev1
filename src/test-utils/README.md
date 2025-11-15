@@ -16,12 +16,7 @@ Este directorio contiene herramientas y mocks para hacer testing más fácil y c
 ### Importar Utilities
 
 ```typescript
-import {
-  mockMenuItem,
-  mockCartItem,
-  createMockAppState,
-  LocalStorageMock,
-} from './test-utils';
+import { mockMenuItem, mockCartItem, createMockAppState, LocalStorageMock } from './test-utils';
 ```
 
 ### Mock Data
@@ -59,6 +54,7 @@ simulateTextInput(input, 'texto de prueba');
 ### Mock Data
 
 #### `mockMenuItem`
+
 Item de menú completo con todos los campos necesarios.
 
 ```typescript
@@ -74,17 +70,21 @@ Item de menú completo con todos los campos necesarios.
 ```
 
 #### `mockDrinkItem`
+
 Bebida de ejemplo.
 
 #### `mockCartItem`
+
 Item en el carrito con personalizaciones.
 
 #### `mockOrderHistory`
+
 Array de pedidos históricos.
 
 ### State Creators
 
 #### `createMockAppState(overrides?)`
+
 Crea un estado completo de la aplicación con valores por defecto.
 
 ```typescript
@@ -97,33 +97,39 @@ const state = createMockAppState({
 ### Helpers
 
 #### `simulateClick(element: HTMLElement)`
+
 Simula un click en un elemento.
 
 #### `simulateTextInput(element: HTMLInputElement, value: string)`
+
 Simula input de texto en un campo.
 
 #### `simulateSelectChange(element: HTMLSelectElement, value: string)`
+
 Simula cambio de selección en un select.
 
 #### `waitForPromises()`
+
 Espera a que se resuelvan todas las promesas pendientes.
 
 #### `delay(ms: number)`
+
 Crea un delay en milisegundos.
 
 ### Mocks
 
 #### `LocalStorageMock`
+
 Mock completo de la API de localStorage.
 
 ```typescript
 class LocalStorageMock {
-  clear(): void
-  getItem(key: string): string | null
-  setItem(key: string, value: string): void
-  removeItem(key: string): void
-  get length(): number
-  key(index: number): string | null
+  clear(): void;
+  getItem(key: string): string | null;
+  setItem(key: string, value: string): void;
+  removeItem(key: string): void;
+  get length(): number;
+  key(index: number): string | null;
 }
 ```
 
@@ -131,12 +137,7 @@ class LocalStorageMock {
 
 ```typescript
 import { describe, it, expect } from 'vitest'; // o jest
-import {
-  mockMenuItem,
-  createMockAppState,
-  simulateClick,
-  LocalStorageMock,
-} from './test-utils';
+import { mockMenuItem, createMockAppState, simulateClick, LocalStorageMock } from './test-utils';
 
 describe('MenuItemCard', () => {
   it('should render item correctly', () => {

@@ -1,6 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 # Run linting before commit (auto-fix where possible)
 echo "🔍 Running ESLint..."
 npm run lint:fix || {
@@ -19,5 +16,6 @@ npm run type-check || {
 }
 
 echo "✅ Pre-commit checks complete!"
+
 
 

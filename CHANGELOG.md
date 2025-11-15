@@ -10,6 +10,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 ### 🎉 Mejoras de Experiencia de Desarrollo
 
 #### Añadido
+
 - **CONTRIBUTING.md**: Guía completa para contribuidores
   - Proceso de setup del proyecto
   - Flujo de trabajo con Git
@@ -70,6 +71,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
   - Documentación de variables requeridas
 
 #### Mejorado
+
 - **README.md**: Ahora incluye:
   - Insignias de estado del proyecto
   - Tabla de contenidos
@@ -86,6 +88,7 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
   - Metadatos del proyecto actualizados
 
 #### Arreglado
+
 - Problema de peer dependencies con react-qr-code
   - Documentado uso de `--legacy-peer-deps`
   - Incluido en scripts de setup
@@ -109,30 +112,35 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 ### 🎯 Próximas Mejoras Planificadas
 
 #### Testing
+
 - [ ] Configuración de Vitest
 - [ ] Tests unitarios para hooks
 - [ ] Tests de integración para componentes
 - [ ] Coverage reports
 
 #### CI/CD
+
 - [ ] GitHub Actions para CI
 - [ ] Auto-deploy a staging
 - [ ] Auto-release con semantic-release
 - [ ] Automated dependency updates
 
 #### Documentación
+
 - [ ] Storybook para componentes
 - [ ] API documentation
 - [ ] Video tutorials
 - [ ] Interactive demos
 
 #### Calidad de Código
+
 - [ ] SonarQube integration
 - [ ] Lighthouse CI
 - [ ] Bundle size monitoring
 - [ ] Performance budgets
 
 #### Developer Experience
+
 - [ ] Docker setup
 - [ ] Mock server para desarrollo
 - [ ] Seed data para testing
@@ -143,17 +151,21 @@ y este proyecto adhiere a [Semantic Versioning](https://semver.org/lang/es/).
 ## Cómo Usar Este Changelog
 
 ### Para Desarrolladores
+
 Revisa este archivo antes de empezar a trabajar para conocer los últimos cambios.
 
 ### Para Contribuidores
+
 Actualiza este archivo cuando añadas nuevas features o corrijas bugs.
 
 ### Para Usuarios
+
 Consulta este archivo para saber qué cambió en cada versión.
 
 ---
 
 **Leyenda de Secciones:**
+
 - 🎉 **Añadido**: Nuevas características
 - 🔄 **Cambiado**: Cambios en funcionalidad existente
 - ⚠️ **Deprecado**: Características que se eliminarán pronto

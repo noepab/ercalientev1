@@ -1,9 +1,9 @@
 /**
  * Test Utilities - Utilidades para facilitar el testing de componentes
- * 
+ *
  * Este archivo proporciona funciones helper para probar componentes React
  * de manera más sencilla y mantener consistencia en los tests.
- * 
+ *
  * Nota: Estas utilities están diseñadas para ser usadas con testing frameworks
  * como Jest, Vitest, o React Testing Library cuando se implementen.
  */

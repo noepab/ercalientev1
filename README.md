@@ -31,11 +31,13 @@
 ## ✨ Características
 
 ### 🎤 Interacción por Voz
+
 - **Pedidos por voz** con Google Gemini AI
 - **Procesamiento en tiempo real** de comandos hablados
 - **Confirmación inteligente** de pedidos
 
 ### 🍽️ Gestión de Pedidos
+
 - **Menú interactivo** con galería visual
 - **Personalización de items** (ingredientes, alergias)
 - **Carrito de compras** dinámico
@@ -43,6 +45,7 @@
 - **Historial de pedidos** con persistencia local
 
 ### 🎨 Experiencia de Usuario
+
 - **Animaciones fluidas** con Framer Motion
 - **Diseño responsive** para móvil, tablet y desktop
 - **Tema oscuro/claro** adaptable
@@ -50,6 +53,7 @@
 - **Mapa de conexiones** de clientes
 
 ### 🤖 Integraciones de IA
+
 - **Google Gemini API** para procesamiento de lenguaje natural
 - **Análisis de imágenes** de comida
 - **Generación de imágenes** personalizadas
@@ -57,6 +61,7 @@
 - **Chatbot inteligente** para asistencia
 
 ### 🔧 Características Técnicas
+
 - **TypeScript** para type safety
 - **React Hooks** para gestión de estado
 - **Context API** para estado global
@@ -77,6 +82,7 @@ npm run setup
 ```
 
 El script te guiará a través de:
+
 - ✅ Verificación de Node.js
 - ✅ Instalación de dependencias
 - ✅ Configuración de variables de entorno
@@ -109,6 +115,7 @@ npm run dev
 ## 🛠️ Comandos Disponibles
 
 ### Desarrollo
+
 ```bash
 npm run dev          # Inicia servidor de desarrollo (http://localhost:5173)
 npm run build        # Construye para producción
@@ -116,6 +123,7 @@ npm run preview      # Vista previa del build de producción
 ```
 
 ### Calidad de Código
+
 ```bash
 npm run lint         # Verifica código con ESLint
 npm run lint:fix     # Auto-corrige problemas de linting
@@ -125,6 +133,7 @@ npm run type-check   # Verifica tipos TypeScript
 ```
 
 ### Setup
+
 ```bash
 npm run setup        # Script interactivo de configuración
 ```
@@ -145,6 +154,7 @@ VITE_GEMINI_API_KEY=tu_api_key_aqui
 ### VSCode (Recomendado)
 
 El proyecto incluye configuración para VSCode:
+
 - **Extensiones recomendadas** (se instalan automáticamente)
 - **Format on save** habilitado
 - **ESLint** integrado
@@ -174,22 +184,23 @@ ercalientev1/
 
 ### Stack Tecnológico
 
-| Categoría | Tecnología |
-|-----------|-----------|
-| Framework | React 19.2 |
-| Lenguaje | TypeScript 5.8 |
-| Build Tool | Vite 6.2 |
-| Animaciones | Framer Motion 11 |
-| IA | Google Gemini API |
-| Estado | React Hooks + Context API |
-| Storage | IndexedDB |
-| Estilo | CSS Modules |
+| Categoría   | Tecnología                |
+| ----------- | ------------------------- |
+| Framework   | React 19.2                |
+| Lenguaje    | TypeScript 5.8            |
+| Build Tool  | Vite 6.2                  |
+| Animaciones | Framer Motion 11          |
+| IA          | Google Gemini API         |
+| Estado      | React Hooks + Context API |
+| Storage     | IndexedDB                 |
+| Estilo      | CSS Modules               |
 
 ## 💻 Desarrollo
 
 ### Flujo de Trabajo
 
 1. **Crea una rama** para tu feature:
+
    ```bash
    git checkout -b feature/mi-feature
    ```
@@ -197,6 +208,7 @@ ercalientev1/
 2. **Haz tus cambios** siguiendo las guías de estilo
 
 3. **Verifica tu código**:
+
    ```bash
    npm run lint
    npm run format
@@ -205,6 +217,7 @@ ercalientev1/
    ```
 
 4. **Commit y push**:
+
    ```bash
    git add .
    git commit -m "feat: descripción del cambio"
@@ -216,11 +229,13 @@ ercalientev1/
 ### Debugging
 
 #### En VSCode
+
 1. Presiona `F5` para iniciar debugging
 2. Coloca breakpoints en tu código
 3. Usa la consola integrada
 
 #### En Browser
+
 1. Abre DevTools (F12)
 2. Instala [React DevTools](https://react.dev/learn/react-developer-tools)
 3. Inspecciona componentes y estado

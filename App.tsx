@@ -2,13 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { GoogleGenAI, Type, GenerateContentResponse } from '@google/genai';
 import { ModalProvider } from './src/context/ModalContext';
 // Types and Data
-import {
-  AppState,
-  MenuItem,
-  DrinkItem,
-  Toast,
-  CartItem
-} from './src/types';
+import { AppState, MenuItem, DrinkItem, Toast, CartItem } from './src/types';
 // Hooks
 import { useOrder } from './src/hooks/useOrder';
 import { useMenu } from './src/hooks/useMenu';
@@ -45,15 +39,17 @@ const App: React.FC = () => {
   // App State
   const [appState, setAppState] = useState<AppState>(AppState.IDLE);
   const [locationStatus, setLocationStatus] = useState<string>('Obteniendo ubicación...');
-  const [coordinates, setCoordinates] = useState<{ latitude: number, longitude: number } | null>(null);
+  const [coordinates, setCoordinates] = useState<{ latitude: number; longitude: number } | null>(
+    null
+  );
   const [statusMessage, setStatusMessage] = useState<string>('');
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const addToast = useCallback((message: string, type: 'success' | 'error' = 'success') => {
     const id = Date.now();
-    setToasts(prev => [...prev, { id, message, type }]);
+    setToasts((prev) => [...prev, { id, message, type }]);
     setTimeout(() => {
-      setToasts(prev => prev.filter(t => t.id !== id));
+      setToasts((prev) => prev.filter((t) => t.id !== id));
     }, 3000);
   }, []);
 
@@ -62,7 +58,7 @@ const App: React.FC = () => {
   const liveSessionHook = useLiveSession({
     setAppState,
     setStatusMessage,
-    addToast
+    addToast,
   });
 
   return (

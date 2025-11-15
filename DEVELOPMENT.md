@@ -59,20 +59,26 @@ El componente `App` es el centro de la aplicación y gestiona:
 ### Hooks Personalizados
 
 #### useOrder
+
 Gestiona la lógica del carrito y pedidos:
+
 - Añadir/quitar items
 - Cálculos de totales
 - Historial de pedidos
 - Persistencia en IndexedDB
 
 #### useMenu
+
 Gestiona el menú de comida:
+
 - Búsqueda y filtrado
 - Categorías
 - Disponibilidad
 
 #### useLiveSession
+
 Gestiona la integración con Google Gemini:
+
 - Conexión WebRTC
 - Audio bidireccional
 - Procesamiento de respuestas
@@ -80,7 +86,9 @@ Gestiona la integración con Google Gemini:
 ### Context API
 
 #### ModalContext
+
 Gestiona el estado de todos los modales de la aplicación:
+
 - Apertura/cierre
 - Estado compartido
 - Prevención de múltiples modales
@@ -122,7 +130,7 @@ Gestiona el estado de todos los modales de la aplicación:
 ```typescript
 // Inicialización
 const genai = new GoogleGenAI({
-  apiKey: import.meta.env.VITE_GEMINI_API_KEY
+  apiKey: import.meta.env.VITE_GEMINI_API_KEY,
 });
 
 // Live Session
@@ -135,6 +143,7 @@ const session = await genai.models.generateContent({
 ### IndexedDB
 
 Almacenamiento local para:
+
 - Historial de pedidos
 - Preferencias de usuario
 - Cache del menú
@@ -151,14 +160,12 @@ await db.put('orders', orderData);
 ### Geolocalización
 
 ```typescript
-navigator.geolocation.getCurrentPosition(
-  (position) => {
-    setCoordinates({
-      latitude: position.coords.latitude,
-      longitude: position.coords.longitude
-    });
-  }
-);
+navigator.geolocation.getCurrentPosition((position) => {
+  setCoordinates({
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude,
+  });
+});
 ```
 
 ## 🎨 Patrones de Diseño
@@ -175,12 +182,12 @@ Encapsula lógica reutilizable:
 ```typescript
 export function useOrder() {
   const [cart, setCart] = useState<CartItem[]>([]);
-  
+
   const addItem = useCallback((item: MenuItem) => {
     // lógica
   }, []);
-  
-  return { cart, addItem, /* ... */ };
+
+  return { cart, addItem /* ... */ };
 }
 ```
 
@@ -199,21 +206,20 @@ export const useModal = () => useContext(ModalContext);
 ### Performance
 
 1. **Memoización**
+
    ```typescript
    const MemoizedTableBill = React.memo(TableBill);
    ```
 
 2. **Lazy Loading**
+
    ```typescript
    const Modal = lazy(() => import('./Modal'));
    ```
 
 3. **useCallback/useMemo**
    ```typescript
-   const filteredItems = useMemo(() => 
-     items.filter(/* ... */), 
-     [items, filter]
-   );
+   const filteredItems = useMemo(() => items.filter(/* ... */), [items, filter]);
    ```
 
 ### Build Optimization
@@ -250,6 +256,7 @@ VITE_GEMINI_API_KEY=tu_api_key_aqui
 ## 📱 Responsive Design
 
 La app está optimizada para:
+
 - 📱 Mobile (320px - 767px)
 - 📱 Tablet (768px - 1023px)
 - 💻 Desktop (1024px+)
@@ -259,6 +266,7 @@ La app está optimizada para:
 ### VSCode
 
 Usa la configuración de launch (ver `.vscode/launch.json`):
+
 - F5 para iniciar debugging
 - Breakpoints en TypeScript
 - Console integrada
@@ -294,12 +302,12 @@ npm run build -- --mode analyze
 
 ```typescript
 enum AppState {
-  IDLE,           // Estado inicial
-  LISTENING,      // Escuchando entrada de voz
-  PROCESSING,     // Procesando con AI
-  ORDERING,       // En proceso de pedido
-  PAYMENT,        // Procesando pago
-  COMPLETED       // Pedido completado
+  IDLE, // Estado inicial
+  LISTENING, // Escuchando entrada de voz
+  PROCESSING, // Procesando con AI
+  ORDERING, // En proceso de pedido
+  PAYMENT, // Procesando pago
+  COMPLETED, // Pedido completado
 }
 ```
 
@@ -316,16 +324,19 @@ enum AppState {
 ### Problemas Comunes
 
 **1. Error de peer dependencies**
+
 ```bash
 npm install --legacy-peer-deps
 ```
 
 **2. API Key no funciona**
+
 - Verifica que `.env.local` existe
 - Verifica que la variable empieza con `VITE_`
 - Reinicia el dev server
 
 **3. Build falla**
+
 ```bash
 # Limpia y reinstala
 rm -rf node_modules package-lock.json
@@ -334,6 +345,7 @@ npm run build
 ```
 
 **4. Problemas con TypeScript**
+
 ```bash
 # Verifica tipos
 npx tsc --noEmit

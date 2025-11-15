@@ -84,7 +84,7 @@ async function setupEnvironment() {
 
   const apiKey = await question('Ingresa tu GEMINI_API_KEY (o presiona Enter para omitir): ');
 
-  let envContent = '# Variables de Entorno para Bocateria Er\'caliente\n\n';
+  let envContent = "# Variables de Entorno para Bocateria Er'caliente\n\n";
   envContent += '# Google Gemini API Key\n';
   envContent += '# Obtén tu API key en: https://ai.google.dev/\n';
   envContent += `VITE_GEMINI_API_KEY=${apiKey || 'tu_api_key_aqui'}\n`;
@@ -93,7 +93,9 @@ async function setupEnvironment() {
   console.log('✅ Archivo .env.local creado');
 
   if (!apiKey) {
-    console.log('⚠️  Recuerda configurar tu GEMINI_API_KEY en .env.local antes de usar las funciones de AI');
+    console.log(
+      '⚠️  Recuerda configurar tu GEMINI_API_KEY en .env.local antes de usar las funciones de AI'
+    );
   }
 }
 
@@ -130,7 +132,7 @@ async function showNextSteps() {
 async function main() {
   console.log('╔══════════════════════════════════════════════════════╗');
   console.log('║                                                      ║');
-  console.log('║       🍔 Bocateria Er\'caliente - Setup 🍔          ║');
+  console.log("║       🍔 Bocateria Er'caliente - Setup 🍔          ║");
   console.log('║                                                      ║');
   console.log('╚══════════════════════════════════════════════════════╝');
 

@@ -5,17 +5,20 @@
 ## 🚀 Inicio Rápido
 
 1. **Fork y Clone**
+
    ```bash
    git clone https://github.com/tu-usuario/ercalientev1.git
    cd ercalientev1
    ```
 
 2. **Instalar Dependencias**
+
    ```bash
    npm install --legacy-peer-deps
    ```
 
 3. **Configurar Variables de Entorno**
+
    ```bash
    # Copia el archivo de ejemplo
    cp .env.example .env.local
@@ -30,6 +33,7 @@
 ## 📝 Proceso de Desarrollo
 
 ### 1. Crear una Rama
+
 ```bash
 git checkout -b feature/nombre-de-tu-feature
 # o

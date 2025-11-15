@@ -8,13 +8,13 @@ declare global {
   namespace React.JSX {
     interface IntrinsicElements {
       'model-viewer': React.DetailedHTMLProps<React.HTMLAttributes<HTMLElement>, HTMLElement> & {
-          src?: string;
-          ar?: boolean;
-          arModes?: string;
-          cameraControls?: boolean;
-          autoRotate?: boolean;
-          alt?: string;
-        };
+        src?: string;
+        ar?: boolean;
+        arModes?: string;
+        cameraControls?: boolean;
+        autoRotate?: boolean;
+        alt?: string;
+      };
     }
   }
 }
@@ -25,6 +25,6 @@ if (rootElement) {
   root.render(
     <React.StrictMode>
       <App />
-    </React.StrictMode>,
+    </React.StrictMode>
   );
 }

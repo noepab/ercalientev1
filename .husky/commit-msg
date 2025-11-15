@@ -1,6 +1,3 @@
-#!/bin/sh
-. "$(dirname "$0")/_/husky.sh"
-
 # Validate commit message format
 # Expected format: type: description
 # Examples: feat: add new feature, fix: correct bug, docs: update readme
@@ -29,3 +26,4 @@ if ! echo "$commit_msg" | grep -qE "$pattern"; then
   echo "Ejemplo: feat: añadir página de login"
   exit 1
 fi
+

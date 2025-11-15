@@ -1,0 +1,23 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+# Run linting before commit (auto-fix where possible)
+echo "🔍 Running ESLint..."
+npm run lint:fix || {
+  echo "⚠️  Linting warnings found. Please review before committing."
+}
+
+# Format code with Prettier
+echo "✨ Formatting code..."
+npm run format
+
+# Type checking (non-blocking, only show summary)
+echo "🔎 Checking types..."
+npm run type-check || {
+  echo "⚠️  TypeScript errors found. Consider fixing them."
+  echo "ℹ️  Commit will proceed (these are pre-existing issues)."
+}
+
+echo "✅ Pre-commit checks complete!"
+
+

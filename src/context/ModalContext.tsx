@@ -20,50 +20,34 @@ const ModalContext = createContext<ModalContextType | undefined>(undefined);
 const initialModals: Modal[] = [];
 
 const createModalInitializer = (modals: Modal[]): Modal[] => {
-  return modals.map(modal => ({
+  return modals.map((modal) => ({
     ...modal,
     isOpen: false,
   }));
 };
 
 export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
-  const [modals, setModals] = useState<Modal[]>(
-    createModalInitializer(initialModals)
-  );
+  const [modals, setModals] = useState<Modal[]>(createModalInitializer(initialModals));
 
-  const openModal = useCallback(
-    (id: string, type: string, data?: Record<string, any>) => {
-      setModals(prevModals => {
-        const existingModal = prevModals.find(m => m.id === id);
-        if (existingModal) {
-          return prevModals.map(m =>
-            m.id === id ? { ...m, isOpen: true, data } : m
-          );
-        }
-        return [...prevModals, { id, type, isOpen: true, data }];
-      });
-    },
-    []
-  );
+  const openModal = useCallback((id: string, type: string, data?: Record<string, any>) => {
+    setModals((prevModals) => {
+      const existingModal = prevModals.find((m) => m.id === id);
+      if (existingModal) {
+        return prevModals.map((m) => (m.id === id ? { ...m, isOpen: true, data } : m));
+      }
+      return [...prevModals, { id, type, isOpen: true, data }];
+    });
+  }, []);
 
   const closeModal = useCallback((id: string) => {
-    setModals(prevModals =>
-      prevModals.map(m =>
-        m.id === id ? { ...m, isOpen: false } : m
-      )
-    );
+    setModals((prevModals) => prevModals.map((m) => (m.id === id ? { ...m, isOpen: false } : m)));
   }, []);
 
   const closeAllModals = useCallback(() => {
-    setModals(prevModals =>
-      prevModals.map(m => ({ ...m, isOpen: false }))
-    );
+    setModals((prevModals) => prevModals.map((m) => ({ ...m, isOpen: false })));
   }, []);
 
-  const getModal = useCallback(
-    (id: string) => modals.find(m => m.id === id),
-    [modals]
-  );
+  const getModal = useCallback((id: string) => modals.find((m) => m.id === id), [modals]);
 
   const value: ModalContextType = {
     modals,
@@ -73,11 +57,7 @@ export const ModalProvider: React.FC<{ children: ReactNode }> = ({ children }) =
     getModal,
   };
 
-  return (
-    <ModalContext.Provider value={value}>
-      {children}
-    </ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={value}>{children}</ModalContext.Provider>;
 };
 
 export const useModal = (): ModalContextType => {

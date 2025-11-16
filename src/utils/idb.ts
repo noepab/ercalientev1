@@ -9,111 +9,113 @@ const DB_VERSION = 7; // Incremented version to apply schema changes
 let db: IDBDatabase;
 
 function getDB(): Promise<IDBDatabase> {
-    return new Promise((resolve, reject) => {
-        if (db) {
-            return resolve(db);
-        }
+  return new Promise((resolve, reject) => {
+    if (db) {
+      return resolve(db);
+    }
 
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
+    const request = indexedDB.open(DB_NAME, DB_VERSION);
 
-        request.onerror = () => {
-            console.error('IndexedDB error:', request.error);
-            reject('Error opening IndexedDB');
-        };
+    request.onerror = () => {
+      console.error('IndexedDB error:', request.error);
+      reject('Error opening IndexedDB');
+    };
 
-        request.onsuccess = () => {
-            db = request.result;
-            resolve(db);
-        };
+    request.onsuccess = () => {
+      db = request.result;
+      resolve(db);
+    };
 
-        request.onupgradeneeded = () => {
-            const dbInstance = request.result;
-            // Clean up old stores from previous structures
-            if (dbInstance.objectStoreNames.contains('menuState')) dbInstance.deleteObjectStore('menuState');
-            if (dbInstance.objectStoreNames.contains('customImages')) dbInstance.deleteObjectStore('customImages');
-            
-            // Create new, robust stores
-            if (!dbInstance.objectStoreNames.contains(IMAGE_CUSTOMIZATIONS_STORE)) {
-                dbInstance.createObjectStore(IMAGE_CUSTOMIZATIONS_STORE); // key: itemId, value: imageUrl
-            }
-            if (!dbInstance.objectStoreNames.contains(NEW_MENU_ITEMS_STORE)) {
-                dbInstance.createObjectStore(NEW_MENU_ITEMS_STORE, { keyPath: 'id' });
-            }
-        };
-    });
+    request.onupgradeneeded = () => {
+      const dbInstance = request.result;
+      // Clean up old stores from previous structures
+      if (dbInstance.objectStoreNames.contains('menuState'))
+        dbInstance.deleteObjectStore('menuState');
+      if (dbInstance.objectStoreNames.contains('customImages'))
+        dbInstance.deleteObjectStore('customImages');
+
+      // Create new, robust stores
+      if (!dbInstance.objectStoreNames.contains(IMAGE_CUSTOMIZATIONS_STORE)) {
+        dbInstance.createObjectStore(IMAGE_CUSTOMIZATIONS_STORE); // key: itemId, value: imageUrl
+      }
+      if (!dbInstance.objectStoreNames.contains(NEW_MENU_ITEMS_STORE)) {
+        dbInstance.createObjectStore(NEW_MENU_ITEMS_STORE, { keyPath: 'id' });
+      }
+    };
+  });
 }
 
 // --- Image Customizations ---
 
 export async function saveImageCustomization(itemId: number, imageUrl: string): Promise<void> {
-    const db = await getDB();
-    const transaction = db.transaction(IMAGE_CUSTOMIZATIONS_STORE, 'readwrite');
-    const store = transaction.objectStore(IMAGE_CUSTOMIZATIONS_STORE);
-    store.put(imageUrl, itemId);
-    return new Promise((resolve, reject) => {
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-    });
+  const db = await getDB();
+  const transaction = db.transaction(IMAGE_CUSTOMIZATIONS_STORE, 'readwrite');
+  const store = transaction.objectStore(IMAGE_CUSTOMIZATIONS_STORE);
+  store.put(imageUrl, itemId);
+  return new Promise((resolve, reject) => {
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+  });
 }
 
 export async function loadAllImageCustomizations(): Promise<Record<number, string>> {
-    const db = await getDB();
-    const transaction = db.transaction(IMAGE_CUSTOMIZATIONS_STORE, 'readonly');
-    const store = transaction.objectStore(IMAGE_CUSTOMIZATIONS_STORE);
-    const request = store.openCursor();
-    const customizations: Record<number, string> = {};
-    return new Promise((resolve, reject) => {
-        request.onsuccess = () => {
-            const cursor = request.result;
-            if (cursor) {
-                customizations[cursor.key as number] = cursor.value;
-                cursor.continue();
-            } else {
-                resolve(customizations);
-            }
-        };
-        request.onerror = () => reject(request.error);
-    });
+  const db = await getDB();
+  const transaction = db.transaction(IMAGE_CUSTOMIZATIONS_STORE, 'readonly');
+  const store = transaction.objectStore(IMAGE_CUSTOMIZATIONS_STORE);
+  const request = store.openCursor();
+  const customizations: Record<number, string> = {};
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => {
+      const cursor = request.result;
+      if (cursor) {
+        customizations[cursor.key as number] = cursor.value;
+        cursor.continue();
+      } else {
+        resolve(customizations);
+      }
+    };
+    request.onerror = () => reject(request.error);
+  });
 }
 
 export async function clearAllImageCustomizations(): Promise<void> {
-    const db = await getDB();
-    const transaction = db.transaction(IMAGE_CUSTOMIZATIONS_STORE, 'readwrite');
-    transaction.objectStore(IMAGE_CUSTOMIZATIONS_STORE).clear();
-     return new Promise((resolve, reject) => {
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-    });
+  const db = await getDB();
+  const transaction = db.transaction(IMAGE_CUSTOMIZATIONS_STORE, 'readwrite');
+  transaction.objectStore(IMAGE_CUSTOMIZATIONS_STORE).clear();
+  return new Promise((resolve, reject) => {
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+  });
 }
 
 // --- New Menu Items (Generated by AI) ---
 
 export async function saveNewMenuItem(item: MenuItem): Promise<void> {
-    const db = await getDB();
-    const transaction = db.transaction(NEW_MENU_ITEMS_STORE, 'readwrite');
-    transaction.objectStore(NEW_MENU_ITEMS_STORE).put(item);
-    return new Promise((resolve, reject) => {
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-    });
+  const db = await getDB();
+  const transaction = db.transaction(NEW_MENU_ITEMS_STORE, 'readwrite');
+  transaction.objectStore(NEW_MENU_ITEMS_STORE).put(item);
+  return new Promise((resolve, reject) => {
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+  });
 }
 
 export async function loadNewMenuItems(): Promise<MenuItem[]> {
-    const db = await getDB();
-    const transaction = db.transaction(NEW_MENU_ITEMS_STORE, 'readonly');
-    const request = transaction.objectStore(NEW_MENU_ITEMS_STORE).getAll();
-    return new Promise((resolve, reject) => {
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-    });
+  const db = await getDB();
+  const transaction = db.transaction(NEW_MENU_ITEMS_STORE, 'readonly');
+  const request = transaction.objectStore(NEW_MENU_ITEMS_STORE).getAll();
+  return new Promise((resolve, reject) => {
+    request.onsuccess = () => resolve(request.result);
+    request.onerror = () => reject(request.error);
+  });
 }
 
 export async function clearNewMenuItems(): Promise<void> {
-    const db = await getDB();
-    const transaction = db.transaction(NEW_MENU_ITEMS_STORE, 'readwrite');
-    transaction.objectStore(NEW_MENU_ITEMS_STORE).clear();
-    return new Promise((resolve, reject) => {
-        transaction.oncomplete = () => resolve();
-        transaction.onerror = () => reject(transaction.error);
-    });
+  const db = await getDB();
+  const transaction = db.transaction(NEW_MENU_ITEMS_STORE, 'readwrite');
+  transaction.objectStore(NEW_MENU_ITEMS_STORE).clear();
+  return new Promise((resolve, reject) => {
+    transaction.oncomplete = () => resolve();
+    transaction.onerror = () => reject(transaction.error);
+  });
 }

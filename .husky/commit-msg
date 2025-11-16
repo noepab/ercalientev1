@@ -1,0 +1,29 @@
+# Validate commit message format
+# Expected format: type: description
+# Examples: feat: add new feature, fix: correct bug, docs: update readme
+
+commit_msg=$(cat "$1")
+
+# Regex pattern for conventional commits
+pattern="^(feat|fix|docs|style|refactor|perf|test|chore)(\(.+\))?: .{1,}"
+
+if ! echo "$commit_msg" | grep -qE "$pattern"; then
+  echo "❌ Error: Formato de commit inválido"
+  echo ""
+  echo "El mensaje de commit debe seguir el formato:"
+  echo "  tipo: descripción"
+  echo ""
+  echo "Tipos válidos:"
+  echo "  feat     - Nueva característica"
+  echo "  fix      - Corrección de bug"
+  echo "  docs     - Cambios en documentación"
+  echo "  style    - Cambios de formato"
+  echo "  refactor - Refactorización de código"
+  echo "  perf     - Mejoras de rendimiento"
+  echo "  test     - Añadir o modificar tests"
+  echo "  chore    - Tareas de mantenimiento"
+  echo ""
+  echo "Ejemplo: feat: añadir página de login"
+  exit 1
+fi
+

@@ -10,11 +10,18 @@ interface TableSelectionModalProps {
 
 const tables = Array.from({ length: 12 }, (_, i) => (i + 1).toString());
 
-export const TableSelectionModal: React.FC<TableSelectionModalProps> = ({ isOpen, onClose, onSelect }) => {
+export const TableSelectionModal: React.FC<TableSelectionModalProps> = ({
+  isOpen,
+  onClose,
+  onSelect,
+}) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 backdrop-blur-md" onClick={onClose}>
+    <div
+      className="fixed inset-0 bg-black/90 flex items-center justify-center z-50 backdrop-blur-md"
+      onClick={onClose}
+    >
       <motion.div
         initial={{ opacity: 0, y: 20, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -23,12 +30,17 @@ export const TableSelectionModal: React.FC<TableSelectionModalProps> = ({ isOpen
         className="bg-gradient-to-br from-[var(--color-surface)] to-[var(--color-bg)] rounded-xl shadow-2xl p-8 max-w-lg w-full relative text-white border border-[var(--color-surface-light)]"
         onClick={(e) => e.stopPropagation()}
       >
-        <button onClick={onClose} className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors">
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors"
+        >
           <XIcon className="w-6 h-6" />
         </button>
-        <h2 className="text-3xl font-bold mb-8 text-center font-heading text-slate-100">Selecciona tu Mesa</h2>
+        <h2 className="text-3xl font-bold mb-8 text-center font-heading text-slate-100">
+          Selecciona tu Mesa
+        </h2>
         <div className="grid grid-cols-3 sm:grid-cols-4 gap-4">
-          {tables.map(table => (
+          {tables.map((table) => (
             <motion.button
               key={table}
               whileHover={{ scale: 1.1 }}
